@@ -555,6 +555,7 @@
 
         <script>
             let currentFilter = 'today';
+            let manualPredictions = {};
 
             // URL LIVE otomatis berdasarkan Fixture ID dari API-Sports.
             // Pola yang dipakai: https://livescore889.com/match/{fixtureId}
@@ -646,7 +647,18 @@
             });
 
             function getPredictedScore(fixtureId) {
-                const num = parseInt(fixtureId) || 0; return `${(num * 3) % 4} : ${(num * 7) % 3}`;
+                return manualPredictions[String(fixtureId)] || '- : -';
+            }
+
+            async function loadManualPredictions() {
+                try {
+                    const response = await fetch(`predictions.json?t=${Date.now()}`, { cache: 'no-store' });
+                    if (!response.ok) throw new Error('predictions.json tidak ditemukan');
+                    manualPredictions = await response.json();
+                } catch (error) {
+                    console.warn('Gagal memuat prediksi manual:', error);
+                    manualPredictions = {};
+                }
             }
 
             function fetchFootballData() {
@@ -765,8 +777,16 @@
                 document.getElementById('predictionList').innerHTML = predictionHtml;
             }
 
-            fetchFootballData();
-            setInterval(fetchFootballData, 120000); // Auto update 2 menit
+            async function initPage() {
+                await loadManualPredictions();
+                fetchFootballData();
+            }
+
+            initPage();
+            setInterval(async () => {
+                await loadManualPredictions();
+                fetchFootballData();
+            }, 120000); // Auto update 2 menit
         </script>
     </body>
 </html>
