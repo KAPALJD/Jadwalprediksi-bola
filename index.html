@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
         <title>KAPAL JUDI • Jadwal & Prediksi Bola</title>
         <meta name="title" content="KAPAL JUDI : PLATFORM DIGITAL PALING POPULER DI INDONESIA | Minimal Deposit 20.000">
         <meta name="description" content="KAPAL JUDI menjadi daftar situs pkv games terpercaya warga +62 karena mempunyai lisensi resmi yang menjadikan game ini semakin seru dan gampang jackpot pastinya."/>
@@ -499,6 +502,49 @@
                 }
             }
 
+
+
+            /* =========================================================
+               COMPACT LIST RESTORE — keep original list composition
+               ========================================================= */
+            .panel {
+                padding: 12px 14px !important;
+            }
+            .item {
+                border-radius: 0 !important;
+                padding: 10px 8px !important;
+                margin: 0 !important;
+            }
+            .item:not(.header-item):hover {
+                transform: none !important;
+                border-radius: 7px !important;
+            }
+            .header-item {
+                margin: 0 !important;
+                padding: 12px 8px 7px !important;
+                border-radius: 0 !important;
+                background: transparent !important;
+                border-bottom: 1px solid rgba(176, 38, 255, 0.38) !important;
+                box-shadow: none !important;
+            }
+            .header-item:not(:first-child) {
+                padding-top: 16px !important;
+            }
+            .header-item .teams {
+                font-size: .82rem !important;
+                letter-spacing: .015em;
+            }
+            .time {
+                min-width: 78px !important;
+            }
+            @media (max-width: 520px) {
+                .panel { padding: 10px 9px !important; }
+                .item { padding: 9px 5px !important; }
+                .header-item { padding: 11px 5px 6px !important; }
+                .header-item:not(:first-child) { padding-top: 14px !important; }
+                .time { min-width: 67px !important; }
+            }
+
             /* Respect reduced motion */
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
@@ -762,7 +808,7 @@
                 });
 
                 grouped.forEach((items, league) => {
-                    const header = `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${escapeHTML(league)}</span></div>`;
+                    const header = `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">${escapeHTML(league)}</span></div>`;
                     scheduleHtml += header;
                     predictionHtml += header;
                     items.forEach(m => {
@@ -777,8 +823,9 @@
             }
 
             async function fetchApiDate(dateStr) {
-                const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${dateStr}&timezone=Asia/Jakarta`, {
+                const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${dateStr}&timezone=Asia/Jakarta&_=${Date.now()}`, {
                     method: 'GET',
+                    cache: 'no-store',
                     headers: { 'x-rapidapi-key': API_KEY, 'x-rapidapi-host': 'v3.football.api-sports.io' }
                 });
                 if (!response.ok) throw new Error(`API ${response.status}`);
@@ -858,13 +905,32 @@
                 await refreshLiveStatus();
             }
 
+            async function refreshLocalData() {
+                const [latestSchedule, latestPredictions] = await Promise.all([
+                    loadJSON('schedule.json', scheduleData),
+                    loadJSON('predictions.json', manualPredictions)
+                ]);
+
+                scheduleData = latestSchedule;
+                manualPredictions = latestPredictions;
+                renderMatches();
+            }
+
             initPage();
 
-            setInterval(async () => {
-                manualPredictions = await loadJSON('predictions.json', manualPredictions);
-                renderMatches();
-                await refreshLiveStatus();
-            }, 120000);
+            // Jadwal + prediksi lokal: cek versi terbaru otomatis setiap 15 detik.
+            // loadJSON sudah memakai cache:'no-store' + timestamp, jadi browser tidak memakai JSON lama.
+            setInterval(refreshLocalData, 15000);
+
+            // Status LIVE dari API tetap 2 menit agar tidak boros request/quota.
+            setInterval(refreshLiveStatus, 120000);
+
+            // Saat pengguna kembali ke tab/browser, langsung cek data terbaru.
+            window.addEventListener('focus', refreshLocalData);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) refreshLocalData();
+            });
+            window.addEventListener('pageshow', refreshLocalData);
         </script>
     </body>
 </html>
