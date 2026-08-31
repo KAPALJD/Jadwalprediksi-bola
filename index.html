@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>KAPAL JUDI • Jadwal & Prediksi Bola</title>
+        <meta name="title" content="KAPAL JUDI : PLATFORM DIGITAL PALING POPULER DI INDONESIA | Minimal Deposit 20.000">
+        <meta name="description" content="KAPAL JUDI menjadi daftar situs pkv games terpercaya warga +62 karena mempunyai lisensi resmi yang menjadikan game ini semakin seru dan gampang jackpot pastinya."/>
+        <meta name="robots" content="index, follow">
+        <link rel="shortcut icon" type="image/x-icon" href="https://eventkapalbola.ampspeedy.com/assets/logo/logo-kj.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+        <style>
+            :root {
+                --neon: #b026ff;
+                --neon-bright: #d633ff;
+                --bg: #0a0014;
+                --glow: 0 0 12px rgba(176, 38, 255, 0.55), 0 0 28px rgba(176, 38, 255, 0.25);
+                --glow-strong: 0 0 16px rgba(214, 51, 255, 0.85), 0 0 40px rgba(176, 38, 255, 0.45);
+            }
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+                color: #f3e9ff;
+                padding: 24px 16px 48px;
+                min-height: 100vh;
+                background: radial-gradient(ellipse at top, #1a0030 0%, #0a0014 55%, #050008 100%);
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: url('https://ik.imagekit.io/tcaifgw9w/download.png') center center / cover no-repeat;
+                z-index: -2;
+                opacity: 0.35;
+            }
+
+            body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: radial-gradient(ellipse at 50% 0%, rgba(80, 0, 140, 0.45), rgba(10, 0, 20, 0.85));
+                z-index: -1;
+            }
+
+            .top-bar {
+                position: fixed;
+                top: 0; left: 0; right: 0; height: 3px;
+                background: linear-gradient(90deg, #4a0080, #b026ff, #d633ff, #ff5cf0, #ffffff);
+                z-index: 10;
+                box-shadow: 0 0 14px rgba(176, 38, 255, 0.8);
+            }
+
+            .container {
+                max-width: 700px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
+
+            .hero {
+                position: relative;
+                z-index: 999;
+                text-align: center;
+                margin-bottom: 24px;
+                background: rgba(12, 2, 28, 0.97);
+                border: 1px solid rgba(176, 38, 255, 0.45);
+                border-radius: 1rem;
+                overflow: hidden;
+                backdrop-filter: blur(18px);
+            }
+
+            .hero img { width: 100%; display: block; }
+
+            .link-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+            .link-box a {
+                background: linear-gradient(105deg, rgba(40, 10, 70, 0.85), rgba(28, 6, 50, 0.85));
+                padding: 12px 20px; border-radius: 44px; font-weight: 600; text-decoration: none;
+                display: flex; align-items: center; gap: 14px; border: 1px solid rgba(176, 38, 255, 0.5);
+                color: #f5ecff; transition: all 0.35s;
+            }
+            .link-box a:hover { border-color: var(--neon-bright); transform: translateX(6px) scale(1.02); box-shadow: var(--glow); }
+
+            .tabs {
+                display: flex; gap: 10px; margin: 18px 0 12px;
+                background: rgba(20, 6, 40, 0.8); padding: 5px;
+                border-radius: 60px; border: 1px solid rgba(176, 38, 255, 0.25);
+            }
+
+            .tab {
+                flex: 1; background: transparent; border: none; color: #d9a8ff;
+                font-weight: 600; padding: 10px 0; border-radius: 60px; cursor: pointer;
+                transition: all 0.35s; font-size: 0.85rem;
+            }
+            .tab.active { background: linear-gradient(95deg, #6a00cc, #b026ff); color: white; box-shadow: var(--glow); }
+
+            /* Sub-Filter Hari ini / Besok */
+            .sub-tabs {
+                display: flex; justify-content: center; gap: 8px; margin-bottom: 14px;
+            }
+
+            .sub-tab {
+                background: rgba(30, 8, 55, 0.7);
+                border: 1px solid rgba(176, 38, 255, 0.3);
+                color: #d9a8ff;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .sub-tab.active {
+                background: #b026ff;
+                color: #ffffff;
+                border-color: #d633ff;
+                box-shadow: 0 0 10px rgba(176, 38, 255, 0.6);
+            }
+
+            .panel {
+                display: none; background: rgba(18, 4, 36, 0.85); border-radius: 1.8rem;
+                padding: 18px 16px; max-height: 520px; overflow-y: auto;
+                border: 1px solid rgba(176, 38, 255, 0.25); backdrop-filter: blur(10px);
+            }
+            .panel.show { display: block; animation: fadeIn 0.4s ease; }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+            .panel::-webkit-scrollbar { width: 5px; }
+            .panel::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #b026ff, #6a00cc); border-radius: 4px; }
+
+            .item {
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 12px 10px; border-bottom: 1px solid rgba(176, 38, 255, 0.12); gap: 10px; border-radius: 10px;
+            }
+            .item:hover { background: rgba(176, 38, 255, 0.1); transform: translateX(4px); }
+            .header-item { padding: 14px 8px 6px; border-bottom: 1px solid rgba(176, 38, 255, 0.4); margin-top: 6px; }
+
+            .time { font-weight: 600; color: #c77dff; font-size: 0.8rem; white-space: nowrap; min-width: 70px; flex-shrink: 0; }
+            .teams { font-weight: 500; flex: 1; color: #f0e6ff; font-size: 0.88rem; }
+
+            .action-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+            .live-btn {
+                background-color: #f12545; color: #ffffff; font-size: 0.68rem; font-weight: 800;
+                padding: 4px 12px; border-radius: 14px; text-decoration: none; display: inline-block;
+                text-align: center; animation: pulseLive 1.5s infinite; box-shadow: 0 0 8px rgba(241, 37, 69, 0.5); white-space: nowrap;
+            }
+            
+            @keyframes pulseLive {
+                0% { transform: scale(1); box-shadow: 0 0 8px rgba(241, 37, 69, 0.5); }
+                50% { transform: scale(1.08); box-shadow: 0 0 16px rgba(241, 37, 69, 0.9); }
+                100% { transform: scale(1); box-shadow: 0 0 8px rgba(241, 37, 69, 0.5); }
+            }
+
+            .status-badge { font-size: 0.7rem; color: #ff9cf0; font-weight: bold; background: rgba(176, 38, 255, 0.2); padding: 3px 8px; border-radius: 8px; }
+            .score { color: #ff9cf0; font-weight: 700; background: rgba(176, 38, 255, 0.35); padding: 3px 12px; border-radius: 40px; font-size: 0.85rem; border: 1px solid rgba(176, 38, 255, 0.4); }
+
+            .service-marquee {
+                background: linear-gradient(90deg, rgba(40, 10, 70, 0.85), rgba(28, 6, 50, 0.85));
+                border-radius: 56px; margin: 16px 0 20px; padding: 6px 0; overflow: hidden; border: 1px solid rgba(176, 38, 255, 0.3);
+            }
+            .service-track { display: flex; animation: scrollService 25s linear infinite; width: fit-content; align-items: center; }
+            .service-item {
+                display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; background: rgba(30, 8, 55, 0.9);
+                border-radius: 30px; margin: 0 6px; color: #f5ecff; text-decoration: none; font-size: 0.72rem; font-weight: 600;
+                white-space: nowrap; border: 1px solid rgba(176, 38, 255, 0.2);
+            }
+            @keyframes scrollService { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+            
+            .update-time { font-size: 0.65rem; text-align: right; color: #d633ff; margin-bottom: 8px; }
+            .loading-text { text-align: center; padding: 20px; color: #d633ff; font-size: 0.9rem; }
+
+
+            /* =========================================================
+               GLOW EDITION — enhanced visual layer
+               ========================================================= */
+            :root {
+                --neon-cyan: #62f6ff;
+                --neon-pink: #ff4fd8;
+                --glass: rgba(14, 4, 32, 0.72);
+                --glass-strong: rgba(20, 5, 44, 0.9);
+                --line: rgba(216, 120, 255, 0.35);
+                --soft-white: rgba(255,255,255,0.82);
+            }
+
+            html { scroll-behavior: smooth; }
+
+            body {
+                overflow-x: hidden;
+                background:
+                    radial-gradient(circle at 18% 12%, rgba(176, 38, 255, 0.22), transparent 26%),
+                    radial-gradient(circle at 82% 18%, rgba(98, 246, 255, 0.10), transparent 24%),
+                    radial-gradient(circle at 50% 88%, rgba(255, 79, 216, 0.11), transparent 30%),
+                    linear-gradient(180deg, #10001d 0%, #080011 48%, #030006 100%);
+            }
+
+            /* Moving aurora / stars layer */
+            .ambient-glow {
+                position: fixed;
+                inset: -20%;
+                z-index: -1;
+                pointer-events: none;
+                opacity: .9;
+                background:
+                    radial-gradient(circle at 25% 30%, rgba(176, 38, 255, .14) 0 2px, transparent 3px),
+                    radial-gradient(circle at 70% 24%, rgba(255,255,255,.12) 0 1px, transparent 2px),
+                    radial-gradient(circle at 58% 66%, rgba(98,246,255,.12) 0 1px, transparent 2px),
+                    conic-gradient(from 160deg at 50% 50%, rgba(176,38,255,.10), transparent 18%, rgba(98,246,255,.08), transparent 45%, rgba(255,79,216,.08), transparent 72%);
+                background-size: 170px 170px, 220px 220px, 260px 260px, 100% 100%;
+                filter: blur(.2px);
+                animation: ambientDrift 18s linear infinite;
+            }
+            @keyframes ambientDrift {
+                0% { transform: translate3d(-2%, -1%, 0) rotate(0deg); }
+                50% { transform: translate3d(2%, 1%, 0) rotate(1.2deg); }
+                100% { transform: translate3d(-2%, -1%, 0) rotate(0deg); }
+            }
+
+            .top-bar {
+                height: 4px;
+                background: linear-gradient(90deg, #6a00ff, #b026ff, #ff4fd8, #62f6ff, #ffffff, #b026ff);
+                background-size: 250% 100%;
+                animation: topGlow 5s linear infinite;
+                box-shadow: 0 0 10px #b026ff, 0 0 28px rgba(176,38,255,.8), 0 0 45px rgba(98,246,255,.35);
+            }
+            @keyframes topGlow { to { background-position: 250% 0; } }
+
+            .container::before {
+                content: "";
+                position: absolute;
+                inset: -45px -28px auto;
+                height: 300px;
+                pointer-events: none;
+                background: radial-gradient(ellipse, rgba(176,38,255,.18), transparent 68%);
+                filter: blur(20px);
+                z-index: -1;
+            }
+
+            .hero {
+                box-shadow:
+                    0 16px 55px rgba(0,0,0,.5),
+                    0 0 0 1px rgba(214,51,255,.20),
+                    0 0 28px rgba(176,38,255,.28),
+                    inset 0 0 30px rgba(176,38,255,.10);
+                isolation: isolate;
+            }
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: -2px;
+                border-radius: inherit;
+                padding: 2px;
+                background: linear-gradient(120deg, rgba(98,246,255,.85), rgba(176,38,255,.95), rgba(255,79,216,.9), rgba(255,255,255,.75), rgba(176,38,255,.95));
+                background-size: 300% 300%;
+                animation: borderFlow 7s ease infinite;
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                pointer-events: none;
+                z-index: 2;
+            }
+            .hero::after {
+                content: "";
+                position: absolute;
+                top: -40%; left: -55%;
+                width: 36%; height: 190%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,.17), transparent);
+                transform: rotate(18deg);
+                animation: heroShine 6.8s ease-in-out infinite;
+                z-index: 3;
+                pointer-events: none;
+            }
+            @keyframes heroShine { 0%, 55% { left: -55%; } 78%,100% { left: 125%; } }
+            @keyframes borderFlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+            .link-box a {
+                position: relative;
+                overflow: hidden;
+                background:
+                    linear-gradient(110deg, rgba(45,10,78,.94), rgba(24,5,52,.86));
+                border-color: rgba(214,51,255,.45);
+                box-shadow: inset 0 0 18px rgba(176,38,255,.08), 0 10px 25px rgba(0,0,0,.18);
+            }
+            .link-box a::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.13) 48%, transparent 66%);
+                transform: translateX(-135%);
+                transition: transform .75s ease;
+            }
+            .link-box a:hover::before { transform: translateX(135%); }
+            .link-box a i {
+                color: #f3d6ff;
+                text-shadow: 0 0 8px rgba(214,51,255,.9), 0 0 18px rgba(98,246,255,.32);
+                filter: drop-shadow(0 0 5px rgba(176,38,255,.5));
+            }
+            .link-box a:hover {
+                transform: translateY(-2px) scale(1.015);
+                border-color: rgba(98,246,255,.65);
+                box-shadow: 0 0 14px rgba(176,38,255,.55), 0 0 32px rgba(176,38,255,.26), 0 12px 30px rgba(0,0,0,.28);
+            }
+
+            .tabs, .panel, .service-marquee {
+                position: relative;
+                box-shadow: 0 12px 34px rgba(0,0,0,.26), inset 0 0 24px rgba(176,38,255,.04);
+            }
+            .tabs {
+                background: linear-gradient(180deg, rgba(25,7,48,.86), rgba(13,3,31,.72));
+                border-color: rgba(214,51,255,.30);
+                backdrop-filter: blur(20px) saturate(130%);
+            }
+            .tab {
+                position: relative;
+                overflow: hidden;
+                letter-spacing: .02em;
+            }
+            .tab.active {
+                background: linear-gradient(100deg, #6d00da 0%, #b026ff 48%, #e044ff 100%);
+                box-shadow: 0 0 10px rgba(214,51,255,.65), 0 0 26px rgba(176,38,255,.42), inset 0 1px 0 rgba(255,255,255,.22);
+                text-shadow: 0 0 10px rgba(255,255,255,.36);
+            }
+            .tab.active::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.20), transparent 64%);
+                transform: translateX(-140%);
+                animation: activeTabShine 3.8s ease-in-out infinite;
+            }
+            @keyframes activeTabShine { 0%,45% { transform: translateX(-140%); } 72%,100% { transform: translateX(140%); } }
+
+            .sub-tab {
+                backdrop-filter: blur(12px);
+                box-shadow: inset 0 0 15px rgba(176,38,255,.05);
+            }
+            .sub-tab:hover { border-color: rgba(98,246,255,.45); color: #fff; }
+            .sub-tab.active {
+                background: linear-gradient(95deg, #8b0de8, #c736ff);
+                box-shadow: 0 0 10px rgba(176,38,255,.75), 0 0 24px rgba(176,38,255,.30), inset 0 1px 0 rgba(255,255,255,.25);
+            }
+
+            .panel {
+                background:
+                    linear-gradient(180deg, rgba(25,7,48,.82), rgba(10,2,25,.86));
+                border-color: rgba(214,51,255,.28);
+                backdrop-filter: blur(22px) saturate(135%);
+                box-shadow:
+                    0 18px 42px rgba(0,0,0,.35),
+                    0 0 24px rgba(176,38,255,.13),
+                    inset 0 0 35px rgba(176,38,255,.045);
+            }
+            .panel::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                pointer-events: none;
+                background: linear-gradient(135deg, rgba(255,255,255,.055), transparent 22%, transparent 72%, rgba(176,38,255,.08));
+            }
+
+            .item {
+                position: relative;
+                transition: transform .28s ease, background .28s ease, box-shadow .28s ease, border-color .28s ease;
+            }
+            .item:not(.header-item):hover {
+                background: linear-gradient(90deg, rgba(176,38,255,.12), rgba(98,246,255,.045), rgba(255,79,216,.07));
+                transform: translateX(4px);
+                box-shadow: inset 3px 0 0 rgba(214,51,255,.62), 0 6px 16px rgba(0,0,0,.12);
+            }
+            .header-item {
+                background: linear-gradient(90deg, rgba(176,38,255,.10), transparent 82%);
+                border-bottom-color: rgba(214,51,255,.34);
+                text-shadow: 0 0 13px rgba(176,38,255,.33);
+            }
+            .time {
+                color: #d79cff;
+                text-shadow: 0 0 10px rgba(176,38,255,.35);
+            }
+            .teams { text-shadow: 0 0 8px rgba(255,255,255,.055); }
+
+            .score {
+                background: linear-gradient(100deg, rgba(176,38,255,.34), rgba(255,79,216,.18));
+                border-color: rgba(214,51,255,.48);
+                box-shadow: 0 0 10px rgba(176,38,255,.28), inset 0 0 10px rgba(255,255,255,.05);
+                text-shadow: 0 0 8px rgba(255,79,216,.48);
+            }
+            .status-badge {
+                border: 1px solid rgba(255,79,216,.22);
+                box-shadow: 0 0 10px rgba(255,79,216,.12);
+            }
+            .live-btn {
+                background: linear-gradient(100deg, #ff244b, #ff5075);
+                border: 1px solid rgba(255,255,255,.24);
+                text-shadow: 0 0 6px rgba(255,255,255,.55);
+            }
+
+            .service-marquee {
+                background: rgba(18, 4, 38, .72);
+                border-color: rgba(214,51,255,.30);
+                backdrop-filter: blur(15px);
+            }
+            .service-item {
+                background: linear-gradient(100deg, rgba(37,8,68,.9), rgba(22,5,48,.92));
+                border-color: rgba(214,51,255,.26);
+                box-shadow: inset 0 0 12px rgba(176,38,255,.06);
+                transition: box-shadow .3s ease, border-color .3s ease, transform .3s ease;
+            }
+            .service-item:hover {
+                border-color: rgba(98,246,255,.45);
+                box-shadow: 0 0 14px rgba(176,38,255,.30), inset 0 0 12px rgba(98,246,255,.04);
+                transform: translateY(-1px);
+            }
+
+            .update-time {
+                color: #e18cff;
+                text-shadow: 0 0 9px rgba(176,38,255,.35);
+            }
+            .loading-text i { filter: drop-shadow(0 0 7px rgba(214,51,255,.8)); }
+
+            /* Mobile polish */
+            @media (max-width: 520px) {
+                body { padding: 18px 10px 38px; }
+                .hero { border-radius: .9rem; }
+                .link-box { gap: 9px; }
+                .link-box a { padding: 11px 16px; }
+                .tabs { gap: 6px; }
+                .tab { font-size: .74rem; padding: 10px 4px; }
+                .panel { padding: 14px 10px; border-radius: 1.35rem; }
+                .item { padding: 11px 7px; gap: 7px; }
+                .time { min-width: 61px; font-size: .73rem; }
+                .teams { font-size: .80rem; }
+                .score { padding: 3px 9px; }
+            }
+
+
+
+            /* Random white sparkles */
+            .sparkle-layer {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 1;
+                overflow: hidden;
+            }
+            .sparkle {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255,255,255,.98) 0%, rgba(255,255,255,.85) 36%, rgba(255,255,255,.18) 72%, transparent 100%);
+                box-shadow: 0 0 6px rgba(255,255,255,.95), 0 0 12px rgba(255,255,255,.7), 0 0 22px rgba(255,255,255,.32);
+                opacity: 0;
+                transform: translate3d(0,0,0) scale(.55);
+                will-change: transform, opacity;
+                animation-name: sparkleTwinkle;
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
+            }
+            .sparkle::after {
+                content: "";
+                position: absolute;
+                inset: -140%;
+                background:
+                    linear-gradient(90deg, transparent 47%, rgba(255,255,255,.9) 50%, transparent 53%),
+                    linear-gradient(0deg, transparent 47%, rgba(255,255,255,.78) 50%, transparent 53%);
+                opacity: .45;
+                filter: blur(.4px);
+            }
+            .sparkle.big::before {
+                content: "";
+                position: absolute;
+                inset: -220%;
+                border-radius: inherit;
+                background: radial-gradient(circle, rgba(255,255,255,.22), transparent 68%);
+                filter: blur(2px);
+            }
+            @keyframes sparkleTwinkle {
+                0%, 100% {
+                    opacity: 0;
+                    transform: translate3d(0, 10px, 0) scale(.4);
+                }
+                18% {
+                    opacity: .22;
+                    transform: translate3d(-1px, 2px, 0) scale(.72);
+                }
+                42% {
+                    opacity: 1;
+                    transform: translate3d(0, 0, 0) scale(1.12);
+                }
+                68% {
+                    opacity: .55;
+                    transform: translate3d(1px, -7px, 0) scale(.9);
+                }
+                86% {
+                    opacity: .1;
+                    transform: translate3d(0, -12px, 0) scale(.5);
+                }
+            }
+
+            /* Respect reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation-duration: 0.001ms !important;
+                    animation-iteration-count: 1 !important;
+                    scroll-behavior: auto !important;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="ambient-glow" aria-hidden="true"></div>
+        <div class="sparkle-layer" id="sparkleLayer" aria-hidden="true"></div>
+        <div class="top-bar"></div>
+        <div class="container">
+            <div class="hero">
+                <a href="https://nakodakapal.net/" target="_blank" rel="noopener">
+                    <img src="https://i.ibb.co/23nnGsRq/BANNER.png" alt="KAPAL JUDI" loading="lazy">
+                </a>
+            </div>
+            <div class="link-box">
+                <a href="https://nakodakapal.net/" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Akses Resmi KAPAL JUDI</a>
+                <a href="https://shortq.org/kapalapk" target="_blank" rel="noopener"><i class="fas fa-sign-in-alt"></i> LINK LOGIN PREMIUM</a>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" data-tab="schedule"><i class="fas fa-calendar-alt"></i> JADWAL PERTANDINGAN</button>
+                <button class="tab" data-tab="prediction"><i class="fas fa-chart-line"></i> PREDIKSI SKOR</button>
+            </div>
+
+            <!-- SUB TAB FILTER TANGGAL -->
+            <div class="sub-tabs">
+                <button class="sub-tab active" data-date="today"><i class="fas fa-clock"></i> HARI INI</button>
+                <button class="sub-tab" data-date="tomorrow"><i class="fas fa-calendar-day"></i> BESOK</button>
+            </div>
+
+            <div class="update-time" id="updateTime">🕐 Memuat waktu update...</div>
+            
+            <!-- PANEL JADWAL -->
+            <div id="schedulePanel" class="panel show">
+                <div id="scheduleList"><div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Memuat jadwal...</div></div>
+            </div>
+
+            <!-- PANEL PREDIKSI -->
+            <div id="predictionPanel" class="panel">
+                <div id="predictionList"><div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Memuat data skor...</div></div>
+            </div>
+
+            <div class="service-marquee">
+                <div class="service-track" id="serviceTrack"></div>
+            </div>
+        </div>
+
+        <script>
+            let currentFilter = 'today';
+
+            // URL LIVE otomatis berdasarkan Fixture ID dari API-Sports.
+            // Pola yang dipakai: https://livescore889.com/match/{fixtureId}
+            // Contoh fixture 1490435 -> https://livescore889.com/match/1490435
+            // directLiveUrls tetap tersedia sebagai override jika suatu pertandingan memakai URL khusus.
+            const directLiveUrls = {
+                // 1490435: 'https://livescore889.com/match/1490435'
+            };
+
+            function getLiveUrl(fixtureId) {
+                if (directLiveUrls[fixtureId]) return directLiveUrls[fixtureId];
+                return `https://livescore889.com/match/${encodeURIComponent(fixtureId)}`;
+            }
+
+            const serviceBanners = [
+                { href: 'https://nakodakapal.net/', icon: 'fas fa-globe', title: 'WEBSITE RESMI' },
+                { href: 'https://shortq.org/waaktifkapal', icon: 'fab fa-whatsapp', title: 'WHATSAPP CS' },
+                { href: 'https://shortq.org/chat-kapal', icon: 'fas fa-headset', title: 'LIVE CHAT 24 JAM' }
+            ];
+            let htmlService = '';
+            for(let i=0; i<3; i++) {
+                serviceBanners.forEach(s => { htmlService += `<a href="${s.href}" target="_blank" class="service-item"><i class="${s.icon}"></i><span>${s.title}</span></a>`; });
+            }
+            document.getElementById('serviceTrack').innerHTML = htmlService;
+
+            // Switch Utama Tab (Jadwal / Prediksi)
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('schedulePanel').classList.toggle('show', btn.dataset.tab === 'schedule');
+                    document.getElementById('predictionPanel').classList.toggle('show', btn.dataset.tab === 'prediction');
+                };
+            });
+
+            // Switch Sub Tab (Hari Ini / Besok)
+            document.querySelectorAll('.sub-tab').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.date;
+        
+
+            function initSparkles() {
+                const layer = document.getElementById('sparkleLayer');
+                if (!layer) return;
+
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const sparkleCount = reduceMotion ? 10 : 28;
+                const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
+                function styleSparkle(el, initial = false) {
+                    const size = randomBetween(2, 6);
+                    const duration = randomBetween(2.8, 6.2);
+                    const delay = initial ? randomBetween(-duration, 0) : 0;
+                    el.style.width = `${size}px`;
+                    el.style.height = `${size}px`;
+                    el.style.left = `${randomBetween(1, 99)}%`;
+                    el.style.top = `${randomBetween(1, 99)}%`;
+                    el.style.animationDuration = `${duration}s`;
+                    el.style.animationDelay = `${delay}s`;
+                    el.classList.toggle('big', size > 4.3 && Math.random() > 0.5);
+                }
+
+                for (let i = 0; i < sparkleCount; i++) {
+                    const sparkle = document.createElement('span');
+                    sparkle.className = 'sparkle';
+                    styleSparkle(sparkle, true);
+                    sparkle.addEventListener('animationiteration', () => styleSparkle(sparkle, false));
+                    layer.appendChild(sparkle);
+                }
+
+                if (!reduceMotion) {
+                    setInterval(() => {
+                        const extra = document.createElement('span');
+                        extra.className = 'sparkle big';
+                        styleSparkle(extra, false);
+                        extra.style.animationDuration = `${randomBetween(2.2, 3.8)}s`;
+                        layer.appendChild(extra);
+                        setTimeout(() => extra.remove(), 4200);
+                    }, 1200);
+                }
+            }
+
+            initSparkles();
+
+            fetchFootballData();
+                };
+            });
+
+            function getPredictedScore(fixtureId) {
+                const num = parseInt(fixtureId) || 0; return `${(num * 3) % 4} : ${(num * 7) % 3}`;
+            }
+
+            function fetchFootballData() {
+                const apiKey = "f07a9e46d339ba9e2614ad810fd08639";
+                const targetDate = new Date();
+                
+                if (currentFilter === 'tomorrow') {
+                    targetDate.setDate(targetDate.getDate() + 1);
+                }
+
+                // Format Tanggal Ke YYYY-MM-DD
+                const dateStr = targetDate.toISOString().split('T')[0];
+
+                document.querySelectorAll('.loading-text').forEach(e => e.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memuat data...`);
+
+                fetch(`https://v3.football.api-sports.io/fixtures?date=${dateStr}&timezone=Asia/Jakarta`, {
+                    method: "GET", headers: { "x-rapidapi-key": apiKey, "x-rapidapi-host": "v3.football.api-sports.io" }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data?.response?.length > 0) renderMatches(data.response);
+                    else {
+                        const emptyMsg = currentFilter === 'today' ? "Tidak ada pertandingan hari ini." : "Belum ada jadwal untuk besok.";
+                        document.getElementById('scheduleList').innerHTML = `<div class="loading-text">${emptyMsg}</div>`;
+                        document.getElementById('predictionList').innerHTML = `<div class="loading-text">${emptyMsg}</div>`;
+                    }
+                    document.getElementById('updateTime').innerText = `🕐 Update: ${new Date().toLocaleTimeString('id-ID')}`;
+                }).catch(() => {
+                    document.querySelectorAll('.loading-text').forEach(e => e.innerHTML = "Gagal memuat data API.");
+                });
+            }
+
+            function renderMatches(fixtures) {
+                const liveStatuses = ['1H', '2H', 'HT', 'ET', 'BT', 'P'];
+                
+                // Pisahkan pertandingan LIVE dari yang lainnya
+                const liveFixtures = fixtures.filter(item => liveStatuses.includes(item.fixture.status.short));
+                const regularFixtures = fixtures.filter(item => !liveStatuses.includes(item.fixture.status.short));
+
+                let scheduleHtml = '', predictionHtml = '';
+
+                // Helper function untuk generate baris HTML
+                const buildRow = (item) => {
+                    const status = item.fixture.status.short;
+                    const matchDate = new Date(item.fixture.date);
+                    let timeStr = matchDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+                    
+                    let liveIndicator = '';
+                    if (liveStatuses.includes(status)) {
+                        let elapsed = item.fixture.status.elapsed;
+                        let liveText = elapsed ? `LIVE ${elapsed}'` : 'LIVE';
+                        if (status === 'HT') liveText = 'HT';
+                        liveIndicator = `<a href="${getLiveUrl(item.fixture.id)}" target="_blank" rel="noopener" class="live-btn" title="Buka live pertandingan">${liveText}</a>`;
+                    } else if (['FT', 'AET', 'PEN'].includes(status)) {
+                        liveIndicator = `<span class="status-badge">FT</span>`;
+                    } else if (['CANC', 'PSTP', 'ABD'].includes(status)) {
+                        liveIndicator = `<span class="status-badge">TUNDA</span>`;
+                    }
+
+                    const homeTeam = item.teams.home.name;
+                    const awayTeam = item.teams.away.name;
+                    const scoreDisplay = (item.goals.home !== null) ? `${item.goals.home} : ${item.goals.away}` : getPredictedScore(item.fixture.id);
+
+                    const schRow = `
+                        <div class="item">
+                            <span class="time">${timeStr}</span>
+                            <span class="teams">${homeTeam} vs ${awayTeam}</span>
+                            <div class="action-container">${liveIndicator}</div>
+                        </div>`;
+
+                    const predRow = `
+                        <div class="item">
+                            <span class="time">${timeStr}</span>
+                            <span class="teams">${homeTeam} vs ${awayTeam}</span>
+                            <div class="action-container">
+                                ${liveIndicator}
+                                <span class="score">${scoreDisplay}</span>
+                            </div>
+                        </div>`;
+
+                    return { schRow, predRow };
+                };
+
+                // 1. TAMPILKAN MATCH LIVE DI PADA URUTAN TERATAS
+                if (liveFixtures.length > 0) {
+                    scheduleHtml += `<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>`;
+                    predictionHtml += `<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>`;
+                    
+                    liveFixtures.forEach(item => {
+                        const row = buildRow(item);
+                        scheduleHtml += row.schRow;
+                        predictionHtml += row.predRow;
+                    });
+                }
+
+                // 2. KELOMPOKKAN SISANYA PER LIGA
+                let grouped = {};
+                regularFixtures.forEach(item => {
+                    const leagueName = `${item.league.country.toUpperCase()} - ${item.league.name.toUpperCase()}`;
+                    if (!grouped[leagueName]) grouped[leagueName] = [];
+                    grouped[leagueName].push(item);
+                });
+
+                for (const league in grouped) {
+                    scheduleHtml += `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${league}</span></div>`;
+                    predictionHtml += `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${league}</span></div>`;
+
+                    grouped[league].forEach(item => {
+                        const row = buildRow(item);
+                        scheduleHtml += row.schRow;
+                        predictionHtml += row.predRow;
+                    });
+                }
+
+                document.getElementById('scheduleList').innerHTML = scheduleHtml;
+                document.getElementById('predictionList').innerHTML = predictionHtml;
+            }
+
+            fetchFootballData();
+            setInterval(fetchFootballData, 120000); // Auto update 2 menit
+        </script>
+    </body>
+</html>
