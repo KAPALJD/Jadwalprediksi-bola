@@ -558,6 +558,23 @@
             }
 
 
+
+            .score.live-score {
+                color: #ffffff;
+                background: linear-gradient(100deg, rgba(241,37,69,.72), rgba(176,38,255,.34));
+                border-color: rgba(255,90,120,.72);
+                box-shadow: 0 0 12px rgba(241,37,69,.48), 0 0 24px rgba(176,38,255,.16), inset 0 0 10px rgba(255,255,255,.06);
+                text-shadow: 0 0 8px rgba(255,255,255,.45);
+            }
+
+            .score.final-score {
+                color: #ffffff;
+                background: linear-gradient(100deg, rgba(35,190,115,.34), rgba(72,255,177,.16));
+                border-color: rgba(92,255,190,.58);
+                box-shadow: 0 0 10px rgba(52,235,150,.28), inset 0 0 10px rgba(255,255,255,.06);
+                text-shadow: 0 0 8px rgba(125,255,205,.5);
+            }
+
             /* Combined schedule + prediction view */
             .combined-title {
                 display: flex;
@@ -647,7 +664,6 @@
             <!-- SUB TAB FILTER TANGGAL -->
             <div class="sub-tabs">
                 <button class="sub-tab active" data-date="today"><i class="fas fa-clock"></i> HARI INI</button>
-                <button class="sub-tab" data-date="tomorrow"><i class="fas fa-calendar-day"></i> BESOK</button>
             </div>
 
             <div class="update-time" id="updateTime">🕐 Memuat waktu update...</div>
@@ -817,6 +833,40 @@
                 return value && String(value).trim() ? String(value).trim() : '- : -';
             }
 
+
+            function getDisplayedScore(match) {
+                const fixture = fixtureFor(match);
+                const status = fixture?.fixture?.status?.short;
+                const home = fixture?.goals?.home;
+                const away = fixture?.goals?.away;
+
+                if (liveStatuses.includes(status)) {
+                    return {
+                        value: `${home ?? 0} : ${away ?? 0}`,
+                        state: 'live',
+                        title: 'Skor LIVE pertandingan'
+                    };
+                }
+
+                if (['FT', 'AET', 'PEN'].includes(status)) {
+                    if (home !== null && home !== undefined && away !== null && away !== undefined) {
+                        return {
+                            value: `${home} : ${away}`,
+                            state: 'final',
+                            title: status === 'PEN'
+                                ? 'Hasil akhir pertandingan (setelah adu penalti)'
+                                : 'Hasil akhir pertandingan'
+                        };
+                    }
+                }
+
+                return {
+                    value: getPrediction(match),
+                    state: 'prediction',
+                    title: 'Prediksi skor sebelum pertandingan'
+                };
+            }
+
             function normalizeTeam(name) {
                 return String(name || '')
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -935,7 +985,13 @@
 
             function buildRow(match) {
                 const indicator = buildIndicator(match);
-                const prediction = escapeHTML(getPrediction(match));
+                const scoreInfo = getDisplayedScore(match);
+                const score = escapeHTML(scoreInfo.value);
+                const scoreClass =
+                    scoreInfo.state === 'live' ? 'score live-score' :
+                    scoreInfo.state === 'final' ? 'score final-score' :
+                    'score';
+                const scoreTitle = escapeHTML(scoreInfo.title);
                 const time = escapeHTML(match.time) + ' WIB';
                 const teams = `${escapeHTML(match.home)} vs ${escapeHTML(match.away)}`;
 
@@ -945,7 +1001,7 @@
                         <span class="teams">${teams}</span>
                         <div class="action-container">
                             ${indicator}
-                            <span class="score" title="Prediksi skor">${prediction}</span>
+                            <span class="${scoreClass}" title="${scoreTitle}">${score}</span>
                         </div>
                     </div>`;
             }
@@ -1088,15 +1144,37 @@
             // loadJSON sudah memakai cache:'no-store' + timestamp, jadi browser tidak memakai JSON lama.
             setInterval(refreshLocalData, 15000);
 
-            // Status LIVE dari API tetap 2 menit agar tidak boros request/quota.
-            setInterval(refreshLiveStatus, 120000);
+            // Skor/status API: saat ada pertandingan LIVE cek tiap 30 detik,
+            // di luar LIVE cek tiap 2 menit supaya request API tetap lebih hemat.
+            function hasLiveMatch() {
+                return [...fixtureCache.values()].some(f =>
+                    liveStatuses.includes(f?.fixture?.status?.short)
+                );
+            }
+
+            async function liveScoreLoop() {
+                await refreshLiveStatus();
+                const nextDelay = hasLiveMatch() ? 30000 : 120000;
+                setTimeout(liveScoreLoop, nextDelay);
+            }
+
+            setTimeout(liveScoreLoop, 30000);
 
             // Saat pengguna kembali ke tab/browser, langsung cek data terbaru.
-            window.addEventListener('focus', refreshLocalData);
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) refreshLocalData();
+            window.addEventListener('focus', () => {
+                refreshLocalData();
+                refreshLiveStatus();
             });
-            window.addEventListener('pageshow', refreshLocalData);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    refreshLocalData();
+                    refreshLiveStatus();
+                }
+            });
+            window.addEventListener('pageshow', () => {
+                refreshLocalData();
+                refreshLiveStatus();
+            });
         </script>
     </body>
 </html>
