@@ -1094,9 +1094,24 @@
                             return;
                         }
                     }
-                    const found = fixtures.find(f =>
+                    let found = fixtures.find(f =>
                         sameTeam(match.home, f.teams?.home?.name) && sameTeam(match.away, f.teams?.away?.name)
                     );
+
+                    // Fallback lebih longgar untuk pertandingan LIVE.
+                    // Beberapa provider mengubah nama tim (FC, AFC, nama sponsor, dll).
+                    if (!found) {
+                        found = fixtures.find(f => {
+                            const homeApi = normalizeTeam(f.teams?.home?.name);
+                            const awayApi = normalizeTeam(f.teams?.away?.name);
+                            const homeManual = normalizeTeam(match.home);
+                            const awayManual = normalizeTeam(match.away);
+                            return homeApi.includes(homeManual) || homeManual.includes(homeApi)
+                                ? (awayApi.includes(awayManual) || awayManual.includes(awayApi))
+                                : false;
+                        });
+                    }
+
                     if (found) fixtureCache.set(match.id, found);
                 });
             }
@@ -1176,7 +1191,7 @@
 
             async function liveScoreLoop() {
                 await refreshLiveStatus();
-                const nextDelay = hasLiveMatch() ? 30000 : 120000;
+                const nextDelay = hasLiveMatch() ? 10000 : 120000;
                 setTimeout(liveScoreLoop, nextDelay);
             }
 
