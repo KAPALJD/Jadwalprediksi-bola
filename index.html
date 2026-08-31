@@ -559,6 +559,24 @@
 
 
 
+
+            .prediction-label {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 10px;
+                border-radius: 999px;
+                font-size: .66rem;
+                font-weight: 800;
+                letter-spacing: .04em;
+                white-space: nowrap;
+                color: #ffd8ff;
+                background: linear-gradient(100deg, rgba(143,26,223,.28), rgba(255,255,255,.06));
+                border: 1px solid rgba(222,123,255,.42);
+                box-shadow: 0 0 10px rgba(191,97,255,.18), inset 0 0 8px rgba(255,255,255,.04);
+                text-transform: uppercase;
+            }
+
             .score.live-score {
                 color: #ffffff;
                 background: linear-gradient(100deg, rgba(241,37,69,.72), rgba(176,38,255,.34));
@@ -994,6 +1012,9 @@
                 const scoreTitle = escapeHTML(scoreInfo.title);
                 const time = escapeHTML(match.time) + ' WIB';
                 const teams = `${escapeHTML(match.home)} vs ${escapeHTML(match.away)}`;
+                const predictionLabel = scoreInfo.state === 'prediction'
+                    ? '<span class="prediction-label">Prediksi</span>'
+                    : '';
 
                 return `
                     <div class="item">
@@ -1001,6 +1022,7 @@
                         <span class="teams">${teams}</span>
                         <div class="action-container">
                             ${indicator}
+                            ${predictionLabel}
                             <span class="${scoreClass}" title="${scoreTitle}">${score}</span>
                         </div>
                     </div>`;
