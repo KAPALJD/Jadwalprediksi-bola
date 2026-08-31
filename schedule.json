@@ -1,0 +1,798 @@
+{
+  "sourceLabel": "Jadwal kiriman 31/08/2026",
+  "timezone": "Asia/Jakarta",
+  "today": [
+    {
+      "id": "m001",
+      "league": "ENGLISH PREMIER LEAGUE",
+      "time": "03:00",
+      "home": "Aston Villa",
+      "away": "Arsenal"
+    },
+    {
+      "id": "m002",
+      "league": "ITALY SERIE A",
+      "time": "00:30",
+      "home": "Lecce",
+      "away": "AS Roma"
+    },
+    {
+      "id": "m003",
+      "league": "ITALY SERIE A",
+      "time": "02:45",
+      "home": "Atalanta",
+      "away": "Bologna"
+    },
+    {
+      "id": "m004",
+      "league": "SPAIN LA LIGA",
+      "time": "01:30",
+      "home": "CA Osasuna",
+      "away": "Getafe CF"
+    },
+    {
+      "id": "m005",
+      "league": "SPAIN LA LIGA",
+      "time": "03:30",
+      "home": "Barcelona",
+      "away": "Rayo Vallecano"
+    },
+    {
+      "id": "m006",
+      "league": "SWEDEN ALLSVENSKAN",
+      "time": "01:00",
+      "home": "GAIS Goteborg",
+      "away": "Brommapojkarna"
+    },
+    {
+      "id": "m007",
+      "league": "SWEDEN ALLSVENSKAN",
+      "time": "01:00",
+      "home": "IK Sirius FK",
+      "away": "Malmo"
+    },
+    {
+      "id": "m008",
+      "league": "SWEDEN ALLSVENSKAN",
+      "time": "01:00",
+      "home": "Djurgardens",
+      "away": "Mjallby"
+    },
+    {
+      "id": "m009",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "Inter Turku",
+      "away": "KuPS"
+    },
+    {
+      "id": "m010",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "Vaasa VPS",
+      "away": "Lahti"
+    },
+    {
+      "id": "m011",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "Ilves Tampere",
+      "away": "HJK Helsinki"
+    },
+    {
+      "id": "m012",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "AC Oulu",
+      "away": "Seinajoen JK"
+    },
+    {
+      "id": "m013",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "IFK Mariehamn",
+      "away": "Jaro"
+    },
+    {
+      "id": "m014",
+      "league": "FINLAND VEIKKAUSLIIGA",
+      "time": "00:00",
+      "home": "Gnistan Helsinki",
+      "away": "TPS Turku"
+    },
+    {
+      "id": "m015",
+      "league": "DENMARK SUPER LEAGUE",
+      "time": "01:00",
+      "home": "FC Copenhagen",
+      "away": "Sonderjyske"
+    },
+    {
+      "id": "m016",
+      "league": "LIGA PORTUGAL",
+      "time": "03:15",
+      "home": "Benfica",
+      "away": "Estoril"
+    },
+    {
+      "id": "m017",
+      "league": "LIGA PORTUGAL",
+      "time": "03:15",
+      "home": "Sporting Braga",
+      "away": "Vitoria Guimaraes"
+    },
+    {
+      "id": "m018",
+      "league": "SPAIN LA LIGA 2",
+      "time": "01:00",
+      "home": "Burgos CF",
+      "away": "Real Sociedad B"
+    },
+    {
+      "id": "m019",
+      "league": "SPAIN LA LIGA 2",
+      "time": "03:30",
+      "home": "Celta Fortuna",
+      "away": "CD Castellon"
+    },
+    {
+      "id": "m020",
+      "league": "TURKIYE SUPER LEAGUE",
+      "time": "02:30",
+      "home": "Amed SK",
+      "away": "Trabzonspor"
+    },
+    {
+      "id": "m021",
+      "league": "TURKIYE SUPER LEAGUE",
+      "time": "02:30",
+      "home": "Besiktas",
+      "away": "Corum FK"
+    },
+    {
+      "id": "m022",
+      "league": "FRANCE LIGUE 2",
+      "time": "02:45",
+      "home": "Dijon",
+      "away": "Saint Etienne"
+    },
+    {
+      "id": "m023",
+      "league": "SWEDEN SUPERETTAN",
+      "time": "01:00",
+      "home": "GIF Sundsvall",
+      "away": "Norrby IF"
+    },
+    {
+      "id": "m024",
+      "league": "NETHERLANDS EERSTE DIVISIE",
+      "time": "02:00",
+      "home": "Jong PSV Eindhoven",
+      "away": "Jong Ajax"
+    },
+    {
+      "id": "m025",
+      "league": "NETHERLANDS EERSTE DIVISIE",
+      "time": "02:00",
+      "home": "Jong AZ Alkmaar",
+      "away": "Jong Utrecht"
+    },
+    {
+      "id": "m026",
+      "league": "ICELAND PREMIER LEAGUE",
+      "time": "03:15",
+      "home": "Breidablik",
+      "away": "Stjarnan"
+    },
+    {
+      "id": "m027",
+      "league": "EGYPT PREMIER LEAGUE",
+      "time": "22:00",
+      "home": "Asyut Petroleum",
+      "away": "National Bank of Egypt SC"
+    },
+    {
+      "id": "m028",
+      "league": "EGYPT PREMIER LEAGUE",
+      "time": "01:00",
+      "home": "EL Zamalek",
+      "away": "Petrojet"
+    },
+    {
+      "id": "m029",
+      "league": "EGYPT PREMIER LEAGUE",
+      "time": "01:00",
+      "home": "Al Masry SC",
+      "away": "Pyramids FC"
+    },
+    {
+      "id": "m030",
+      "league": "GREECE SUPER LEAGUE",
+      "time": "00:30",
+      "home": "Levadiakos",
+      "away": "Panathinaikos"
+    },
+    {
+      "id": "m031",
+      "league": "ROMANIA SUPERLIGA",
+      "time": "01:30",
+      "home": "Rapid Bucuresti",
+      "away": "CS Universitatea Craiova"
+    },
+    {
+      "id": "m032",
+      "league": "UKRAINE PREMIER LEAGUE",
+      "time": "23:00",
+      "home": "FSC Bukovyna Chernivtsi",
+      "away": "Dinamo Kiev"
+    },
+    {
+      "id": "m033",
+      "league": "CYPRUS 1ST DIV",
+      "time": "01:00",
+      "home": "Omonia Nicosia",
+      "away": "Omonia Aradippou"
+    },
+    {
+      "id": "m034",
+      "league": "CROATIA SUPERLIGA",
+      "time": "00:30",
+      "home": "Hajduk Split",
+      "away": "NK Lokomotiva Zagreb"
+    },
+    {
+      "id": "m035",
+      "league": "CROATIA SUPERLIGA",
+      "time": "03:00",
+      "home": "HNK Gorica",
+      "away": "HNK Rijeka"
+    },
+    {
+      "id": "m036",
+      "league": "BULGARIA FIRST PROFESSIONAL FOOTBALL LEAGUE",
+      "time": "00:00",
+      "home": "Dunav Ruse FC",
+      "away": "Lokomotiv Sofia 1929"
+    },
+    {
+      "id": "m037",
+      "league": "BULGARIA FIRST PROFESSIONAL FOOTBALL LEAGUE",
+      "time": "02:15",
+      "home": "FC Arda Kardzhali",
+      "away": "Botev Vratsa"
+    },
+    {
+      "id": "m038",
+      "league": "SWISS CHALLENGE LEAGUE",
+      "time": "02:15",
+      "home": "Wil 1900",
+      "away": "Aarau"
+    },
+    {
+      "id": "m039",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Cambrian United",
+      "away": "Penybont"
+    },
+    {
+      "id": "m040",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Briton Ferry Llansawel",
+      "away": "Barry Town United"
+    },
+    {
+      "id": "m041",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Haverfordwest County",
+      "away": "Trefelin BGC"
+    },
+    {
+      "id": "m042",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Flint Town United FC",
+      "away": "Connahs Quay Nomads FC"
+    },
+    {
+      "id": "m043",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Airbus UK Broughton",
+      "away": "Holywell Town"
+    },
+    {
+      "id": "m044",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "21:30",
+      "home": "Ammanford",
+      "away": "Cardiff Met"
+    },
+    {
+      "id": "m045",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "22:00",
+      "home": "Caernarfon Town",
+      "away": "The New Saints"
+    },
+    {
+      "id": "m046",
+      "league": "WALES PREMIER LEAGUE",
+      "time": "00:15",
+      "home": "Colwyn Bay",
+      "away": "Llandudno FC"
+    },
+    {
+      "id": "m047",
+      "league": "ARMENIA PREMIER LEAGUE",
+      "time": "20:00",
+      "home": "Sardarapat FC [n]",
+      "away": "FC Syunik"
+    },
+    {
+      "id": "m048",
+      "league": "ARMENIA PREMIER LEAGUE",
+      "time": "00:00",
+      "home": "FC Pyunik",
+      "away": "FC Ararat-Armenia"
+    },
+    {
+      "id": "m049",
+      "league": "SERBIA SUPERLIGA",
+      "time": "01:00",
+      "home": "FK Partizan",
+      "away": "OFK Beograd"
+    },
+    {
+      "id": "m050",
+      "league": "AZERBAIJAN PREMIER LEAGUE",
+      "time": "22:00",
+      "home": "Araz Naxcivan PFK",
+      "away": "Sabah Baku"
+    },
+    {
+      "id": "m051",
+      "league": "AZERBAIJAN PREMIER LEAGUE",
+      "time": "00:15",
+      "home": "Sumgayit FK",
+      "away": "FK Qarabag"
+    },
+    {
+      "id": "m052",
+      "league": "RUSSIA FIRST LEAGUE",
+      "time": "00:30",
+      "home": "Spartak Kostroma",
+      "away": "FC Rotor Volgograd"
+    },
+    {
+      "id": "m053",
+      "league": "KAZAKHSTAN PREMIER LEAGUE",
+      "time": "22:00",
+      "home": "FC Elimai",
+      "away": "Kairat Almaty"
+    },
+    {
+      "id": "m054",
+      "league": "LITHUANIA A LEAGUE",
+      "time": "23:45",
+      "home": "Dziugas Telsiai",
+      "away": "FC Hegelmann"
+    },
+    {
+      "id": "m055",
+      "league": "LATVIA VIRSLIGA",
+      "time": "22:30",
+      "home": "FK Liepaja",
+      "away": "Riga FC"
+    },
+    {
+      "id": "m056",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Solihull Moors",
+      "away": "AFC Fylde"
+    },
+    {
+      "id": "m057",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Woking",
+      "away": "Southend United"
+    },
+    {
+      "id": "m058",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Worthing",
+      "away": "Boreham Wood"
+    },
+    {
+      "id": "m059",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Eastleigh",
+      "away": "Aldershot Town"
+    },
+    {
+      "id": "m060",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Forest Green Rovers",
+      "away": "Altrincham"
+    },
+    {
+      "id": "m061",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Yeovil Town",
+      "away": "Tamworth"
+    },
+    {
+      "id": "m062",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Sutton United",
+      "away": "Wealdstone"
+    },
+    {
+      "id": "m063",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Kidderminster Harriers",
+      "away": "Barrow"
+    },
+    {
+      "id": "m064",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Boston United",
+      "away": "Hornchurch FC"
+    },
+    {
+      "id": "m065",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Harrogate Town",
+      "away": "Gateshead"
+    },
+    {
+      "id": "m066",
+      "league": "ENGLISH NATIONAL LEAGUE",
+      "time": "22:00",
+      "home": "Carlisle United",
+      "away": "Scunthorpe United"
+    },
+    {
+      "id": "m067",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "South Shields",
+      "away": "Spalding United"
+    },
+    {
+      "id": "m068",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Chester",
+      "away": "Morecambe"
+    },
+    {
+      "id": "m069",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Chorley",
+      "away": "Brackley Town"
+    },
+    {
+      "id": "m070",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Buxton",
+      "away": "Merthyr Town"
+    },
+    {
+      "id": "m071",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Southport",
+      "away": "Hereford"
+    },
+    {
+      "id": "m072",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Worksop Town",
+      "away": "Oxford City"
+    },
+    {
+      "id": "m073",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Macclesfield FC",
+      "away": "Hebburn Town"
+    },
+    {
+      "id": "m074",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "AFC Telford United",
+      "away": "Bedford Town"
+    },
+    {
+      "id": "m075",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Radcliffe",
+      "away": "Darlington"
+    },
+    {
+      "id": "m076",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Spennymoor Town",
+      "away": "Hednesford Town"
+    },
+    {
+      "id": "m077",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Harborough Town",
+      "away": "Marine"
+    },
+    {
+      "id": "m078",
+      "league": "ENGLISH NATIONAL LEAGUE NORTH",
+      "time": "22:00",
+      "home": "Kings Lynn Town",
+      "away": "Scarborough Athletic"
+    },
+    {
+      "id": "m079",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Salisbury",
+      "away": "Billericay Town"
+    },
+    {
+      "id": "m080",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Hampton & Richmond Borough",
+      "away": "Maidstone United"
+    },
+    {
+      "id": "m081",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Dagenham & Redbridge",
+      "away": "Slough Town"
+    },
+    {
+      "id": "m082",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Tonbridge Angels",
+      "away": "Walton & Hersham"
+    },
+    {
+      "id": "m083",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Braintree Town",
+      "away": "Farnborough"
+    },
+    {
+      "id": "m084",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Folkestone Invicta",
+      "away": "Hemel Hempstead Town"
+    },
+    {
+      "id": "m085",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Dorking Wanderers",
+      "away": "Truro City"
+    },
+    {
+      "id": "m086",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Farnham Town",
+      "away": "Torquay United"
+    },
+    {
+      "id": "m087",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Maidenhead United",
+      "away": "AFC Totton"
+    },
+    {
+      "id": "m088",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Weston Super Mare",
+      "away": "Chelmsford City"
+    },
+    {
+      "id": "m089",
+      "league": "ENGLISH NATIONAL LEAGUE SOUTH",
+      "time": "22:00",
+      "home": "Chesham United",
+      "away": "Dover Athletic"
+    },
+    {
+      "id": "m090",
+      "league": "SWEDEN ETTAN NORTH",
+      "time": "01:00",
+      "home": "Hammarby TFF",
+      "away": "Karlbergs BK"
+    },
+    {
+      "id": "m091",
+      "league": "SPAIN PRIMERA FEDERATION",
+      "time": "01:00",
+      "home": "UD Logrones",
+      "away": "CD Extremadura"
+    },
+    {
+      "id": "m092",
+      "league": "SPAIN PRIMERA FEDERATION",
+      "time": "03:15",
+      "home": "CD Teruel",
+      "away": "Real Madrid Castilla"
+    },
+    {
+      "id": "m093",
+      "league": "BRAZIL SERIE A",
+      "time": "07:00",
+      "home": "Remo PA",
+      "away": "Coritiba PR"
+    },
+    {
+      "id": "m094",
+      "league": "ARGENTINA LIGA PROFESIONAL",
+      "time": "06:00",
+      "home": "Defensa y Justicia",
+      "away": "CA Platense"
+    },
+    {
+      "id": "m095",
+      "league": "ARGENTINA LIGA PROFESIONAL",
+      "time": "06:00",
+      "home": "Estudiantes La Plata",
+      "away": "Newells Old Boys"
+    },
+    {
+      "id": "m096",
+      "league": "ARGENTINA LIGA PROFESIONAL",
+      "time": "08:15",
+      "home": "Club Atletico Tigre",
+      "away": "CA Barracas Central"
+    },
+    {
+      "id": "m097",
+      "league": "ARGENTINA LIGA PROFESIONAL",
+      "time": "08:15",
+      "home": "Instituto",
+      "away": "San Lorenzo"
+    },
+    {
+      "id": "m098",
+      "league": "CHILE PRIMERA DIVISION",
+      "time": "06:15",
+      "home": "Union La Calera",
+      "away": "Deportes La Serena"
+    },
+    {
+      "id": "m099",
+      "league": "CHILE PRIMERA DIVISION",
+      "time": "08:45",
+      "home": "CD Universidad Catolica",
+      "away": "O Higgins"
+    },
+    {
+      "id": "m100",
+      "league": "BRAZIL SERIE B",
+      "time": "06:30",
+      "home": "Fortaleza CE",
+      "away": "Operario Ferroviario EC"
+    },
+    {
+      "id": "m101",
+      "league": "COLOMBIA PRIMERA A",
+      "time": "07:00",
+      "home": "Deportivo Pasto",
+      "away": "Deportivo Pereira"
+    },
+    {
+      "id": "m102",
+      "league": "COLOMBIA PRIMERA A",
+      "time": "09:05",
+      "home": "Deportes Tolima",
+      "away": "Cucuta Deportivo"
+    },
+    {
+      "id": "m103",
+      "league": "BOLIVIA CUP",
+      "time": "08:00",
+      "home": "CD Real Tomayapo",
+      "away": "Independiente Petrolero"
+    },
+    {
+      "id": "m104",
+      "league": "PERU LIGA 1",
+      "time": "04:00",
+      "home": "Atletico Grau",
+      "away": "FBC Melgar"
+    },
+    {
+      "id": "m105",
+      "league": "URUGUAY PRIMERA DIVISION",
+      "time": "02:30",
+      "home": "Racing Club Montevideo",
+      "away": "Albion FC"
+    },
+    {
+      "id": "m106",
+      "league": "ARGENTINA PRIMERA NACIONAL",
+      "time": "06:00",
+      "home": "CA Los Andes",
+      "away": "CA Acassuso"
+    },
+    {
+      "id": "m107",
+      "league": "ARGENTINA PRIMERA NACIONAL",
+      "time": "08:00",
+      "home": "Gimnasia Jujuy",
+      "away": "Club Agropecuario Argentino"
+    },
+    {
+      "id": "m108",
+      "league": "CHILE PRIMERA B",
+      "time": "08:00",
+      "home": "Cobreloa",
+      "away": "San Marcos de Arica"
+    },
+    {
+      "id": "m109",
+      "league": "PARAGUAY DIVISION INTERMEDIA",
+      "time": "03:00",
+      "home": "Paraguari AC",
+      "away": "Resistencia SC"
+    },
+    {
+      "id": "m110",
+      "league": "PARAGUAY DIVISION INTERMEDIA",
+      "time": "05:30",
+      "home": "Encarnacion FC",
+      "away": "Club Dr. Benjamin Aceval"
+    },
+    {
+      "id": "m111",
+      "league": "ARGENTINA PRIMERA B",
+      "time": "06:00",
+      "home": "Club Comunicaciones",
+      "away": "Deportivo Merlo"
+    },
+    {
+      "id": "m112",
+      "league": "VENEZUELA PRIMERA DIVISION",
+      "time": "06:30",
+      "home": "Universidad Central de Venezuela FC",
+      "away": "Deportivo Rayo Zuliano"
+    },
+    {
+      "id": "m113",
+      "league": "VENEZUELA PRIMERA DIVISION",
+      "time": "07:30",
+      "home": "Academia Puerto Cabello",
+      "away": "Anzoategui FC"
+    }
+  ],
+  "tomorrow": []
+}

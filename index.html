@@ -555,54 +555,94 @@
 
         <script>
             let currentFilter = 'today';
+            let scheduleData = { today: [], tomorrow: [] };
             let manualPredictions = {};
+            let fixtureCache = new Map();
 
-            // URL LIVE otomatis berdasarkan Fixture ID dari API-Sports.
-            // Pola yang dipakai: https://livescore889.com/match/{fixtureId}
-            // Contoh fixture 1490435 -> https://livescore889.com/match/1490435
-            // directLiveUrls tetap tersedia sebagai override jika suatu pertandingan memakai URL khusus.
-            const directLiveUrls = {
-                // 1490435: 'https://livescore889.com/match/1490435'
-            };
-
-            function getLiveUrl(fixtureId) {
-                if (directLiveUrls[fixtureId]) return directLiveUrls[fixtureId];
-                return `https://livescore889.com/match/${encodeURIComponent(fixtureId)}`;
-            }
+            const API_KEY = "f07a9e46d339ba9e2614ad810fd08639";
+            const LIVE_BASE_URL = "https://livescore889.com/match/";
+            const liveStatuses = ['1H', '2H', 'HT', 'ET', 'BT', 'P'];
 
             const serviceBanners = [
                 { href: 'https://nakodakapal.net/', icon: 'fas fa-globe', title: 'WEBSITE RESMI' },
                 { href: 'https://shortq.org/waaktifkapal', icon: 'fab fa-whatsapp', title: 'WHATSAPP CS' },
                 { href: 'https://shortq.org/chat-kapal', icon: 'fas fa-headset', title: 'LIVE CHAT 24 JAM' }
             ];
-            let htmlService = '';
-            for(let i=0; i<3; i++) {
-                serviceBanners.forEach(s => { htmlService += `<a href="${s.href}" target="_blank" class="service-item"><i class="${s.icon}"></i><span>${s.title}</span></a>`; });
+
+            function escapeHTML(value) {
+                return String(value ?? '').replace(/[&<>'"]/g, char => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+                })[char]);
             }
-            document.getElementById('serviceTrack').innerHTML = htmlService;
 
-            // Switch Utama Tab (Jadwal / Prediksi)
-            document.querySelectorAll('.tab').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.getElementById('schedulePanel').classList.toggle('show', btn.dataset.tab === 'schedule');
-                    document.getElementById('predictionPanel').classList.toggle('show', btn.dataset.tab === 'prediction');
-                };
-            });
+            function matchKey(match) {
+                return `${match.home} vs ${match.away}`;
+            }
 
-            // Switch Sub Tab (Hari Ini / Besok)
-            document.querySelectorAll('.sub-tab').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentFilter = btn.dataset.date;
-        
+            function getPrediction(match) {
+                const value = manualPredictions[matchKey(match)];
+                return value && String(value).trim() ? String(value).trim() : '- : -';
+            }
+
+            function normalizeTeam(name) {
+                return String(name || '')
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .replace(/\[[^\]]*\]/g, ' ')
+                    .replace(/&/g, ' and ')
+                    .replace(/[^a-z0-9]+/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function teamSignature(name) {
+                const stop = new Set(['fc','cf','fk','sc','ca','cd','ec','ac','afc','club','the']);
+                return normalizeTeam(name).split(' ').filter(x => x && !stop.has(x)).join(' ');
+            }
+
+            function sameTeam(a, b) {
+                const na = normalizeTeam(a), nb = normalizeTeam(b);
+                if (!na || !nb) return false;
+                if (na === nb) return true;
+                const sa = teamSignature(a), sb = teamSignature(b);
+                if (sa && sb && sa === sb) return true;
+                return Math.min(sa.length, sb.length) >= 8 && (sa.includes(sb) || sb.includes(sa));
+            }
+
+            function getJakartaDate(offsetDays = 0) {
+                const now = new Date();
+                const shifted = new Date(now.getTime() + offsetDays * 86400000);
+                const parts = new Intl.DateTimeFormat('en-GB', {
+                    timeZone: 'Asia/Jakarta', year: 'numeric', month: '2-digit', day: '2-digit'
+                }).formatToParts(shifted);
+                const obj = Object.fromEntries(parts.map(p => [p.type, p.value]));
+                return `${obj.year}-${obj.month}-${obj.day}`;
+            }
+
+            async function loadJSON(file, fallback) {
+                try {
+                    const response = await fetch(`${file}?t=${Date.now()}`, { cache: 'no-store' });
+                    if (!response.ok) throw new Error(`${file} HTTP ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`Gagal memuat ${file}:`, error);
+                    return fallback;
+                }
+            }
+
+            function renderServiceBanner() {
+                let html = '';
+                for (let i = 0; i < 3; i++) {
+                    serviceBanners.forEach(s => {
+                        html += `<a href="${escapeHTML(s.href)}" target="_blank" rel="noopener" class="service-item"><i class="${escapeHTML(s.icon)}"></i><span>${escapeHTML(s.title)}</span></a>`;
+                    });
+                }
+                document.getElementById('serviceTrack').innerHTML = html;
+            }
 
             function initSparkles() {
                 const layer = document.getElementById('sparkleLayer');
-                if (!layer) return;
-
+                if (!layer || layer.children.length) return;
                 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 const sparkleCount = reduceMotion ? 10 : 28;
                 const randomBetween = (min, max) => Math.random() * (max - min) + min;
@@ -640,153 +680,191 @@
                 }
             }
 
-            initSparkles();
-
-            fetchFootballData();
-                };
-            });
-
-            function getPredictedScore(fixtureId) {
-                return manualPredictions[String(fixtureId)] || '- : -';
+            function fixtureFor(match) {
+                return fixtureCache.get(match.id) || null;
             }
 
-            async function loadManualPredictions() {
-                try {
-                    const response = await fetch(`predictions.json?t=${Date.now()}`, { cache: 'no-store' });
-                    if (!response.ok) throw new Error('predictions.json tidak ditemukan');
-                    manualPredictions = await response.json();
-                } catch (error) {
-                    console.warn('Gagal memuat prediksi manual:', error);
-                    manualPredictions = {};
+            function buildIndicator(match) {
+                const fixture = fixtureFor(match);
+                if (!fixture) return '';
+                const status = fixture.fixture?.status?.short;
+
+                if (liveStatuses.includes(status)) {
+                    const elapsed = fixture.fixture.status.elapsed;
+                    const liveText = status === 'HT' ? 'HT' : (elapsed ? `LIVE ${elapsed}'` : 'LIVE');
+                    const url = `${LIVE_BASE_URL}${encodeURIComponent(fixture.fixture.id)}`;
+                    return `<a href="${url}" target="_blank" rel="noopener" class="live-btn" title="Buka live pertandingan">${escapeHTML(liveText)}</a>`;
                 }
+                if (['FT', 'AET', 'PEN'].includes(status)) return '<span class="status-badge">FT</span>';
+                if (['CANC', 'PSTP', 'ABD'].includes(status)) return '<span class="status-badge">TUNDA</span>';
+                return '';
             }
 
-            function fetchFootballData() {
-                const apiKey = "f07a9e46d339ba9e2614ad810fd08639";
-                const targetDate = new Date();
-                
-                if (currentFilter === 'tomorrow') {
-                    targetDate.setDate(targetDate.getDate() + 1);
+            function buildRows(match) {
+                const indicator = buildIndicator(match);
+                const prediction = escapeHTML(getPrediction(match));
+                const time = escapeHTML(match.time) + ' WIB';
+                const teams = `${escapeHTML(match.home)} vs ${escapeHTML(match.away)}`;
+
+                const schRow = `
+                    <div class="item">
+                        <span class="time">${time}</span>
+                        <span class="teams">${teams}</span>
+                        <div class="action-container">${indicator}</div>
+                    </div>`;
+
+                const predRow = `
+                    <div class="item">
+                        <span class="time">${time}</span>
+                        <span class="teams">${teams}</span>
+                        <div class="action-container">
+                            ${indicator}
+                            <span class="score">${prediction}</span>
+                        </div>
+                    </div>`;
+                return { schRow, predRow };
+            }
+
+            function renderMatches() {
+                const matches = Array.isArray(scheduleData[currentFilter]) ? scheduleData[currentFilter] : [];
+                if (!matches.length) {
+                    const msg = currentFilter === 'today' ? 'Belum ada jadwal hari ini.' : 'Jadwal besok belum diisi.';
+                    document.getElementById('scheduleList').innerHTML = `<div class="loading-text">${msg}</div>`;
+                    document.getElementById('predictionList').innerHTML = `<div class="loading-text">${msg}</div>`;
+                    return;
                 }
 
-                // Format Tanggal Ke YYYY-MM-DD
-                const dateStr = targetDate.toISOString().split('T')[0];
-
-                document.querySelectorAll('.loading-text').forEach(e => e.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memuat data...`);
-
-                fetch(`https://v3.football.api-sports.io/fixtures?date=${dateStr}&timezone=Asia/Jakarta`, {
-                    method: "GET", headers: { "x-rapidapi-key": apiKey, "x-rapidapi-host": "v3.football.api-sports.io" }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data?.response?.length > 0) renderMatches(data.response);
-                    else {
-                        const emptyMsg = currentFilter === 'today' ? "Tidak ada pertandingan hari ini." : "Belum ada jadwal untuk besok.";
-                        document.getElementById('scheduleList').innerHTML = `<div class="loading-text">${emptyMsg}</div>`;
-                        document.getElementById('predictionList').innerHTML = `<div class="loading-text">${emptyMsg}</div>`;
-                    }
-                    document.getElementById('updateTime').innerText = `🕐 Update: ${new Date().toLocaleTimeString('id-ID')}`;
-                }).catch(() => {
-                    document.querySelectorAll('.loading-text').forEach(e => e.innerHTML = "Gagal memuat data API.");
+                const liveMatches = matches.filter(m => {
+                    const f = fixtureFor(m);
+                    return f && liveStatuses.includes(f.fixture?.status?.short);
                 });
-            }
+                const liveIds = new Set(liveMatches.map(m => m.id));
+                const regular = matches.filter(m => !liveIds.has(m.id));
 
-            function renderMatches(fixtures) {
-                const liveStatuses = ['1H', '2H', 'HT', 'ET', 'BT', 'P'];
-                
-                // Pisahkan pertandingan LIVE dari yang lainnya
-                const liveFixtures = fixtures.filter(item => liveStatuses.includes(item.fixture.status.short));
-                const regularFixtures = fixtures.filter(item => !liveStatuses.includes(item.fixture.status.short));
+                let scheduleHtml = '';
+                let predictionHtml = '';
 
-                let scheduleHtml = '', predictionHtml = '';
-
-                // Helper function untuk generate baris HTML
-                const buildRow = (item) => {
-                    const status = item.fixture.status.short;
-                    const matchDate = new Date(item.fixture.date);
-                    let timeStr = matchDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
-                    
-                    let liveIndicator = '';
-                    if (liveStatuses.includes(status)) {
-                        let elapsed = item.fixture.status.elapsed;
-                        let liveText = elapsed ? `LIVE ${elapsed}'` : 'LIVE';
-                        if (status === 'HT') liveText = 'HT';
-                        liveIndicator = `<a href="${getLiveUrl(item.fixture.id)}" target="_blank" rel="noopener" class="live-btn" title="Buka live pertandingan">${liveText}</a>`;
-                    } else if (['FT', 'AET', 'PEN'].includes(status)) {
-                        liveIndicator = `<span class="status-badge">FT</span>`;
-                    } else if (['CANC', 'PSTP', 'ABD'].includes(status)) {
-                        liveIndicator = `<span class="status-badge">TUNDA</span>`;
-                    }
-
-                    const homeTeam = item.teams.home.name;
-                    const awayTeam = item.teams.away.name;
-                    const scoreDisplay = (item.goals.home !== null) ? `${item.goals.home} : ${item.goals.away}` : getPredictedScore(item.fixture.id);
-
-                    const schRow = `
-                        <div class="item">
-                            <span class="time">${timeStr}</span>
-                            <span class="teams">${homeTeam} vs ${awayTeam}</span>
-                            <div class="action-container">${liveIndicator}</div>
-                        </div>`;
-
-                    const predRow = `
-                        <div class="item">
-                            <span class="time">${timeStr}</span>
-                            <span class="teams">${homeTeam} vs ${awayTeam}</span>
-                            <div class="action-container">
-                                ${liveIndicator}
-                                <span class="score">${scoreDisplay}</span>
-                            </div>
-                        </div>`;
-
-                    return { schRow, predRow };
-                };
-
-                // 1. TAMPILKAN MATCH LIVE DI PADA URUTAN TERATAS
-                if (liveFixtures.length > 0) {
-                    scheduleHtml += `<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>`;
-                    predictionHtml += `<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>`;
-                    
-                    liveFixtures.forEach(item => {
-                        const row = buildRow(item);
+                if (liveMatches.length) {
+                    const header = '<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>';
+                    scheduleHtml += header;
+                    predictionHtml += header;
+                    liveMatches.forEach(m => {
+                        const row = buildRows(m);
                         scheduleHtml += row.schRow;
                         predictionHtml += row.predRow;
                     });
                 }
 
-                // 2. KELOMPOKKAN SISANYA PER LIGA
-                let grouped = {};
-                regularFixtures.forEach(item => {
-                    const leagueName = `${item.league.country.toUpperCase()} - ${item.league.name.toUpperCase()}`;
-                    if (!grouped[leagueName]) grouped[leagueName] = [];
-                    grouped[leagueName].push(item);
+                const grouped = new Map();
+                regular.forEach(m => {
+                    if (!grouped.has(m.league)) grouped.set(m.league, []);
+                    grouped.get(m.league).push(m);
                 });
 
-                for (const league in grouped) {
-                    scheduleHtml += `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${league}</span></div>`;
-                    predictionHtml += `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${league}</span></div>`;
-
-                    grouped[league].forEach(item => {
-                        const row = buildRow(item);
+                grouped.forEach((items, league) => {
+                    const header = `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">📌 ${escapeHTML(league)}</span></div>`;
+                    scheduleHtml += header;
+                    predictionHtml += header;
+                    items.forEach(m => {
+                        const row = buildRows(m);
                         scheduleHtml += row.schRow;
                         predictionHtml += row.predRow;
                     });
-                }
+                });
 
                 document.getElementById('scheduleList').innerHTML = scheduleHtml;
                 document.getElementById('predictionList').innerHTML = predictionHtml;
             }
 
+            async function fetchApiDate(dateStr) {
+                const response = await fetch(`https://v3.football.api-sports.io/fixtures?date=${dateStr}&timezone=Asia/Jakarta`, {
+                    method: 'GET',
+                    headers: { 'x-rapidapi-key': API_KEY, 'x-rapidapi-host': 'v3.football.api-sports.io' }
+                });
+                if (!response.ok) throw new Error(`API ${response.status}`);
+                const data = await response.json();
+                return Array.isArray(data?.response) ? data.response : [];
+            }
+
+            function mapFixturesToSchedule(fixtures) {
+                fixtureCache.clear();
+                const allMatches = [
+                    ...(Array.isArray(scheduleData.today) ? scheduleData.today : []),
+                    ...(Array.isArray(scheduleData.tomorrow) ? scheduleData.tomorrow : [])
+                ];
+
+                allMatches.forEach(match => {
+                    if (match.fixtureId) {
+                        const direct = fixtures.find(f => String(f.fixture?.id) === String(match.fixtureId));
+                        if (direct) {
+                            fixtureCache.set(match.id, direct);
+                            return;
+                        }
+                    }
+                    const found = fixtures.find(f =>
+                        sameTeam(match.home, f.teams?.home?.name) && sameTeam(match.away, f.teams?.away?.name)
+                    );
+                    if (found) fixtureCache.set(match.id, found);
+                });
+            }
+
+            async function refreshLiveStatus() {
+                try {
+                    // Ambil dua tanggal sekaligus karena daftar "hari ini" dari sumber dapat melewati tengah malam WIB.
+                    const baseOffset = currentFilter === 'tomorrow' ? 1 : 0;
+                    const dates = [getJakartaDate(baseOffset), getJakartaDate(baseOffset + 1)];
+                    const results = await Promise.all(dates.map(fetchApiDate));
+                    mapFixturesToSchedule(results.flat());
+                    renderMatches();
+                    document.getElementById('updateTime').innerText = `🕐 Jadwal manual • status live update ${new Date().toLocaleTimeString('id-ID')}`;
+                } catch (error) {
+                    console.warn('Status live tidak dapat diperbarui:', error);
+                    document.getElementById('updateTime').innerText = `🕐 Jadwal manual • ${new Date().toLocaleTimeString('id-ID')}`;
+                }
+            }
+
+            function initTabs() {
+                document.querySelectorAll('.tab').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        document.getElementById('schedulePanel').classList.toggle('show', btn.dataset.tab === 'schedule');
+                        document.getElementById('predictionPanel').classList.toggle('show', btn.dataset.tab === 'prediction');
+                    });
+                });
+
+                document.querySelectorAll('.sub-tab').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentFilter = btn.dataset.date;
+                        renderMatches();
+                        await refreshLiveStatus();
+                    });
+                });
+            }
+
             async function initPage() {
-                await loadManualPredictions();
-                fetchFootballData();
+                renderServiceBanner();
+                initSparkles();
+                initTabs();
+
+                [scheduleData, manualPredictions] = await Promise.all([
+                    loadJSON('schedule.json', { today: [], tomorrow: [] }),
+                    loadJSON('predictions.json', {})
+                ]);
+
+                renderMatches();
+                await refreshLiveStatus();
             }
 
             initPage();
+
             setInterval(async () => {
-                await loadManualPredictions();
-                fetchFootballData();
-            }, 120000); // Auto update 2 menit
+                manualPredictions = await loadJSON('predictions.json', manualPredictions);
+                renderMatches();
+                await refreshLiveStatus();
+            }, 120000);
         </script>
     </body>
 </html>
