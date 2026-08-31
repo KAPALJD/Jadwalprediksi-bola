@@ -653,7 +653,122 @@
         <script>
             let currentFilter = 'today';
             let scheduleData = { today: [], tomorrow: [] };
-            let manualPredictions = {};
+            const DEFAULT_PREDICTIONS = {
+                "Aston Villa vs Arsenal": "1 : 2",
+                "Lecce vs AS Roma": "0 : 2",
+                "Atalanta vs Bologna": "2 : 1",
+                "CA Osasuna vs Getafe CF": "1 : 0",
+                "Barcelona vs Rayo Vallecano": "3 : 0",
+                "GAIS Goteborg vs Brommapojkarna": "1 : 1",
+                "IK Sirius FK vs Malmo": "1 : 2",
+                "Djurgardens vs Mjallby": "2 : 1",
+                "Inter Turku vs KuPS": "1 : 2",
+                "Vaasa VPS vs Lahti": "2 : 1",
+                "Ilves Tampere vs HJK Helsinki": "2 : 2",
+                "AC Oulu vs Seinajoen JK": "1 : 2",
+                "IFK Mariehamn vs Jaro": "1 : 1",
+                "Gnistan Helsinki vs TPS Turku": "2 : 1",
+                "FC Copenhagen vs Sonderjyske": "3 : 0",
+                "Benfica vs Estoril": "3 : 0",
+                "Sporting Braga vs Vitoria Guimaraes": "2 : 1",
+                "Burgos CF vs Real Sociedad B": "1 : 0",
+                "Celta Fortuna vs CD Castellon": "1 : 2",
+                "Amed SK vs Trabzonspor": "1 : 2",
+                "Besiktas vs Corum FK": "2 : 0",
+                "Dijon vs Saint Etienne": "1 : 2",
+                "GIF Sundsvall vs Norrby IF": "2 : 1",
+                "Jong PSV Eindhoven vs Jong Ajax": "2 : 2",
+                "Jong AZ Alkmaar vs Jong Utrecht": "2 : 1",
+                "Breidablik vs Stjarnan": "2 : 1",
+                "Asyut Petroleum vs National Bank of Egypt SC": "0 : 1",
+                "EL Zamalek vs Petrojet": "2 : 0",
+                "Al Masry SC vs Pyramids FC": "1 : 2",
+                "Levadiakos vs Panathinaikos": "0 : 2",
+                "Rapid Bucuresti vs CS Universitatea Craiova": "1 : 1",
+                "FSC Bukovyna Chernivtsi vs Dinamo Kiev": "0 : 3",
+                "Omonia Nicosia vs Omonia Aradippou": "2 : 0",
+                "Hajduk Split vs NK Lokomotiva Zagreb": "2 : 0",
+                "HNK Gorica vs HNK Rijeka": "1 : 2",
+                "Dunav Ruse FC vs Lokomotiv Sofia 1929": "1 : 1",
+                "FC Arda Kardzhali vs Botev Vratsa": "2 : 0",
+                "Wil 1900 vs Aarau": "1 : 2",
+                "Cambrian United vs Penybont": "1 : 2",
+                "Briton Ferry Llansawel vs Barry Town United": "1 : 1",
+                "Haverfordwest County vs Trefelin BGC": "2 : 1",
+                "Flint Town United FC vs Connahs Quay Nomads FC": "1 : 2",
+                "Airbus UK Broughton vs Holywell Town": "1 : 2",
+                "Ammanford vs Cardiff Met": "1 : 2",
+                "Caernarfon Town vs The New Saints": "1 : 3",
+                "Colwyn Bay vs Llandudno FC": "2 : 1",
+                "Sardarapat FC [n] vs FC Syunik": "1 : 2",
+                "FC Pyunik vs FC Ararat-Armenia": "1 : 1",
+                "FK Partizan vs OFK Beograd": "2 : 0",
+                "Araz Naxcivan PFK vs Sabah Baku": "1 : 2",
+                "Sumgayit FK vs FK Qarabag": "0 : 2",
+                "Spartak Kostroma vs FC Rotor Volgograd": "1 : 1",
+                "FC Elimai vs Kairat Almaty": "1 : 2",
+                "Dziugas Telsiai vs FC Hegelmann": "1 : 2",
+                "FK Liepaja vs Riga FC": "1 : 2",
+                "Solihull Moors vs AFC Fylde": "2 : 1",
+                "Woking vs Southend United": "1 : 2",
+                "Worthing vs Boreham Wood": "1 : 1",
+                "Eastleigh vs Aldershot Town": "2 : 1",
+                "Forest Green Rovers vs Altrincham": "2 : 1",
+                "Yeovil Town vs Tamworth": "1 : 1",
+                "Sutton United vs Wealdstone": "2 : 1",
+                "Kidderminster Harriers vs Barrow": "1 : 2",
+                "Boston United vs Hornchurch FC": "2 : 0",
+                "Harrogate Town vs Gateshead": "1 : 2",
+                "Carlisle United vs Scunthorpe United": "2 : 1",
+                "South Shields vs Spalding United": "2 : 0",
+                "Chester vs Morecambe": "1 : 1",
+                "Chorley vs Brackley Town": "1 : 1",
+                "Buxton vs Merthyr Town": "2 : 1",
+                "Southport vs Hereford": "1 : 1",
+                "Worksop Town vs Oxford City": "2 : 1",
+                "Macclesfield FC vs Hebburn Town": "2 : 0",
+                "AFC Telford United vs Bedford Town": "2 : 1",
+                "Radcliffe vs Darlington": "1 : 2",
+                "Spennymoor Town vs Hednesford Town": "2 : 0",
+                "Harborough Town vs Marine": "1 : 1",
+                "Kings Lynn Town vs Scarborough Athletic": "2 : 1",
+                "Salisbury vs Billericay Town": "1 : 2",
+                "Hampton & Richmond Borough vs Maidstone United": "1 : 2",
+                "Dagenham & Redbridge vs Slough Town": "2 : 1",
+                "Tonbridge Angels vs Walton & Hersham": "2 : 1",
+                "Braintree Town vs Farnborough": "1 : 1",
+                "Folkestone Invicta vs Hemel Hempstead Town": "2 : 1",
+                "Dorking Wanderers vs Truro City": "2 : 1",
+                "Farnham Town vs Torquay United": "1 : 2",
+                "Maidenhead United vs AFC Totton": "2 : 1",
+                "Weston Super Mare vs Chelmsford City": "1 : 1",
+                "Chesham United vs Dover Athletic": "2 : 1",
+                "Hammarby TFF vs Karlbergs BK": "2 : 1",
+                "UD Logrones vs CD Extremadura": "1 : 0",
+                "CD Teruel vs Real Madrid Castilla": "1 : 2",
+                "Remo PA vs Coritiba PR": "1 : 1",
+                "Defensa y Justicia vs CA Platense": "1 : 0",
+                "Estudiantes La Plata vs Newells Old Boys": "2 : 0",
+                "Club Atletico Tigre vs CA Barracas Central": "1 : 1",
+                "Instituto vs San Lorenzo": "1 : 1",
+                "Union La Calera vs Deportes La Serena": "2 : 1",
+                "CD Universidad Catolica vs O Higgins": "2 : 0",
+                "Fortaleza CE vs Operario Ferroviario EC": "2 : 0",
+                "Deportivo Pasto vs Deportivo Pereira": "1 : 1",
+                "Deportes Tolima vs Cucuta Deportivo": "2 : 1",
+                "CD Real Tomayapo vs Independiente Petrolero": "2 : 1",
+                "Atletico Grau vs FBC Melgar": "1 : 2",
+                "Racing Club Montevideo vs Albion FC": "1 : 1",
+                "CA Los Andes vs CA Acassuso": "1 : 0",
+                "Gimnasia Jujuy vs Club Agropecuario Argentino": "1 : 0",
+                "Cobreloa vs San Marcos de Arica": "2 : 1",
+                "Paraguari AC vs Resistencia SC": "1 : 1",
+                "Encarnacion FC vs Club Dr. Benjamin Aceval": "2 : 1",
+                "Club Comunicaciones vs Deportivo Merlo": "1 : 1",
+                "Universidad Central de Venezuela FC vs Deportivo Rayo Zuliano": "2 : 1",
+                "Academia Puerto Cabello vs Anzoategui FC": "2 : 0"
+};
+            let manualPredictions = { ...DEFAULT_PREDICTIONS };
             let fixtureCache = new Map();
 
             const API_KEY = "f07a9e46d339ba9e2614ad810fd08639";
@@ -919,10 +1034,15 @@
                 initSparkles();
                 initTabs();
 
-                [scheduleData, manualPredictions] = await Promise.all([
+                const [initialSchedule, initialPredictions] = await Promise.all([
                     loadJSON('schedule.json', { today: [], tomorrow: [] }),
-                    loadJSON('predictions.json', {})
+                    loadJSON('predictions.json', null)
                 ]);
+
+                scheduleData = initialSchedule;
+                manualPredictions = (initialPredictions && typeof initialPredictions === 'object' && !Array.isArray(initialPredictions))
+                    ? { ...DEFAULT_PREDICTIONS, ...initialPredictions }
+                    : { ...DEFAULT_PREDICTIONS };
 
                 renderMatches();
                 await refreshLiveStatus();
@@ -931,11 +1051,13 @@
             async function refreshLocalData() {
                 const [latestSchedule, latestPredictions] = await Promise.all([
                     loadJSON('schedule.json', scheduleData),
-                    loadJSON('predictions.json', manualPredictions)
+                    loadJSON('predictions.json', null)
                 ]);
 
                 scheduleData = latestSchedule;
-                manualPredictions = latestPredictions;
+                manualPredictions = (latestPredictions && typeof latestPredictions === 'object' && !Array.isArray(latestPredictions))
+                    ? { ...DEFAULT_PREDICTIONS, ...latestPredictions }
+                    : { ...DEFAULT_PREDICTIONS };
                 renderMatches();
             }
 
