@@ -545,6 +545,62 @@
                 .time { min-width: 67px !important; }
             }
 
+
+            /* Combined schedule + prediction view */
+            .combined-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                margin: 18px 0 12px;
+                padding: 11px 18px;
+                border-radius: 999px;
+                color: #fff;
+                font-size: .82rem;
+                font-weight: 800;
+                letter-spacing: .015em;
+                background: linear-gradient(100deg, rgba(109,0,218,.92), rgba(176,38,255,.82), rgba(35,7,62,.88));
+                border: 1px solid rgba(214,51,255,.5);
+                box-shadow: 0 0 12px rgba(176,38,255,.42), 0 0 28px rgba(176,38,255,.16), inset 0 1px 0 rgba(255,255,255,.18);
+                backdrop-filter: blur(18px);
+            }
+            .combined-title i {
+                margin-right: 6px;
+                text-shadow: 0 0 10px rgba(255,255,255,.4);
+            }
+            .combined-pred-label {
+                color: #f4cfff;
+                font-size: .72rem;
+                white-space: nowrap;
+            }
+            .item .action-container {
+                min-width: 82px;
+                justify-content: flex-end;
+            }
+            .item .score {
+                min-width: 52px;
+                text-align: center;
+                white-space: nowrap;
+            }
+            @media (max-width: 520px) {
+                .combined-title {
+                    padding: 10px 13px;
+                    font-size: .72rem;
+                }
+                .combined-pred-label {
+                    font-size: .64rem;
+                }
+                .item .action-container {
+                    min-width: 66px;
+                    gap: 5px;
+                }
+                .item .score {
+                    min-width: 48px;
+                    padding: 3px 7px;
+                    font-size: .76rem;
+                }
+            }
+
             /* Respect reduced motion */
             @media (prefers-reduced-motion: reduce) {
                 *, *::before, *::after {
@@ -571,9 +627,9 @@
                 <a href="https://shortq.org/kapalapk" target="_blank" rel="noopener"><i class="fas fa-sign-in-alt"></i> LINK LOGIN PREMIUM</a>
             </div>
             
-            <div class="tabs">
-                <button class="tab active" data-tab="schedule"><i class="fas fa-calendar-alt"></i> JADWAL PERTANDINGAN</button>
-                <button class="tab" data-tab="prediction"><i class="fas fa-chart-line"></i> PREDIKSI SKOR</button>
+            <div class="combined-title">
+                <span><i class="fas fa-calendar-alt"></i> JADWAL &amp; PREDIKSI PERTANDINGAN</span>
+                <span class="combined-pred-label"><i class="fas fa-chart-line"></i> PREDIKSI</span>
             </div>
 
             <!-- SUB TAB FILTER TANGGAL -->
@@ -584,14 +640,9 @@
 
             <div class="update-time" id="updateTime">🕐 Memuat waktu update...</div>
             
-            <!-- PANEL JADWAL -->
+            <!-- PANEL JADWAL + PREDIKSI -->
             <div id="schedulePanel" class="panel show">
-                <div id="scheduleList"><div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Memuat jadwal...</div></div>
-            </div>
-
-            <!-- PANEL PREDIKSI -->
-            <div id="predictionPanel" class="panel">
-                <div id="predictionList"><div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Memuat data skor...</div></div>
+                <div id="scheduleList"><div class="loading-text"><i class="fas fa-spinner fa-spin"></i> Memuat jadwal &amp; prediksi...</div></div>
             </div>
 
             <div class="service-marquee">
@@ -746,29 +797,21 @@
                 return '';
             }
 
-            function buildRows(match) {
+            function buildRow(match) {
                 const indicator = buildIndicator(match);
                 const prediction = escapeHTML(getPrediction(match));
                 const time = escapeHTML(match.time) + ' WIB';
                 const teams = `${escapeHTML(match.home)} vs ${escapeHTML(match.away)}`;
 
-                const schRow = `
-                    <div class="item">
-                        <span class="time">${time}</span>
-                        <span class="teams">${teams}</span>
-                        <div class="action-container">${indicator}</div>
-                    </div>`;
-
-                const predRow = `
+                return `
                     <div class="item">
                         <span class="time">${time}</span>
                         <span class="teams">${teams}</span>
                         <div class="action-container">
                             ${indicator}
-                            <span class="score">${prediction}</span>
+                            <span class="score" title="Prediksi skor">${prediction}</span>
                         </div>
                     </div>`;
-                return { schRow, predRow };
             }
 
             function renderMatches() {
@@ -776,7 +819,6 @@
                 if (!matches.length) {
                     const msg = currentFilter === 'today' ? 'Belum ada jadwal hari ini.' : 'Jadwal besok belum diisi.';
                     document.getElementById('scheduleList').innerHTML = `<div class="loading-text">${msg}</div>`;
-                    document.getElementById('predictionList').innerHTML = `<div class="loading-text">${msg}</div>`;
                     return;
                 }
 
@@ -787,17 +829,12 @@
                 const liveIds = new Set(liveMatches.map(m => m.id));
                 const regular = matches.filter(m => !liveIds.has(m.id));
 
-                let scheduleHtml = '';
-                let predictionHtml = '';
+                let html = '';
 
                 if (liveMatches.length) {
-                    const header = '<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span></div>';
-                    scheduleHtml += header;
-                    predictionHtml += header;
+                    html += '<div class="item header-item"><span class="teams" style="color:#ff4d4d;font-weight:700;">🔥 PERTANDINGAN SEDANG LIVE</span><span class="score" style="visibility:hidden;">0 : 0</span></div>';
                     liveMatches.forEach(m => {
-                        const row = buildRows(m);
-                        scheduleHtml += row.schRow;
-                        predictionHtml += row.predRow;
+                        html += buildRow(m);
                     });
                 }
 
@@ -808,18 +845,13 @@
                 });
 
                 grouped.forEach((items, league) => {
-                    const header = `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">${escapeHTML(league)}</span></div>`;
-                    scheduleHtml += header;
-                    predictionHtml += header;
+                    html += `<div class="item header-item"><span class="teams" style="color:#e0b3ff;font-weight:700;">${escapeHTML(league)}</span><span class="score" style="visibility:hidden;">0 : 0</span></div>`;
                     items.forEach(m => {
-                        const row = buildRows(m);
-                        scheduleHtml += row.schRow;
-                        predictionHtml += row.predRow;
+                        html += buildRow(m);
                     });
                 });
 
-                document.getElementById('scheduleList').innerHTML = scheduleHtml;
-                document.getElementById('predictionList').innerHTML = predictionHtml;
+                document.getElementById('scheduleList').innerHTML = html;
             }
 
             async function fetchApiDate(dateStr) {
@@ -871,15 +903,6 @@
             }
 
             function initTabs() {
-                document.querySelectorAll('.tab').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        document.getElementById('schedulePanel').classList.toggle('show', btn.dataset.tab === 'schedule');
-                        document.getElementById('predictionPanel').classList.toggle('show', btn.dataset.tab === 'prediction');
-                    });
-                });
-
                 document.querySelectorAll('.sub-tab').forEach(btn => {
                     btn.addEventListener('click', async () => {
                         document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
